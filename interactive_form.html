@@ -1,85 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-     
-    <meta charset="UTF-8">
-      <title>Interactive Web Form Assignment</title>
-     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
-      <style>
-        .error-text {
-            color: red;
-            font-size: 0.9rem;
-            margin-top: 3px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Interactive Web Form Assignment</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <style>
+    .error-text {
+      color: red;
+      font-size: 0.9rem;
+      margin-top: 3px;
+      display: none;
+    }
+
+    .error-text.d-inline {
+      display: inline !important;
+      margin-left: 10px;
+    }
+
+    .border-red {
+      border-color: red !important;
+    }
+  </style>
 </head>
-
 <body class="bg-light">
-      <div class="container mt-5">
-            <div class="card shadow">
-                  <div class="card-body">
-                        <h3 class="mb-4">Interactive Web Form</h3>
-                        <!-- Username -->
-                        <div class="mb-3">
-                              <label class="form-label">Username</label>
-                              <input type="text" id="username" class="form-control">
-                            </div>
-                        <!-- Email -->
-                        <div class="mb-3">
-                              <label class="form-label">Email</label>
-                              <input type="email" id="email" class="form-control">
-                            </div>
-                        <!-- Password -->
-                        <div class="mb-3">
-                              <label class="form-label">Password</label>
-                              <input type="password" id="password" class="form-control">
-                            </div>
-                        <!-- Confirm Password -->
-                        <div class="mb-3">
-                              <label class="form-label">Confirm Password</label>
-                              <input type="password" id="confirmPassword" class="form-control">
-                            </div>
-                        <!-- Interesting Topics -->
-                        <div class="mb-3">
-                              <label class="form-label fw-bold">Interesting Topics</label>
-                              <div class="form-check">
-                                    <input class="form-check-input topic" type="checkbox" id="topic1" value="HTML">
-                                    <label class="form-check-label" for="topic1">HTML</label>
-                                  </div>
-                              <div class="form-check">
-                                    <input class="form-check-input topic" type="checkbox" id="topic2" value="CSS">
-                                    <label class="form-check-label" for="topic2">CSS</label>
-                                  </div>
-                              <div class="form-check">
-                                    <input class="form-check-input topic" type="checkbox" id="topic3"
-                            value="JavaScript">
-                                    <label class="form-check-label" for="topic3">JavaScript</label>
-                                  </div>
-                            </div>
-                        <!-- Gender -->
-                        <div class="mb-3">
-                              <label class="form-label fw-bold">Gender</label>
-                              <select id="gender" class="form-select">
-                                    <option>--</option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                    <option>Other</option>
-                                  </select>
-                            </div>
-                        <!-- Submit -->
-                        <button id="submitBtn" class="btn btn-primary">Submit</button>
-                      </div>
-                </div>
-          </div>
-     
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <div class="container mt-5">
+    <div class="card shadow">
+      <div class="card-body">
+        <h3 class="mb-4">Interactive Web Form</h3>
+        
+        <!-- Username -->
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" id="username" class="form-control">
+          <div class="error-text" id="usernameError"></div>
+        </div>
+        
+        <!-- Email -->
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" id="email" class="form-control">
+          <div class="error-text" id="emailError"></div>
+        </div>
+        
+        <!-- Password -->
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" id="password" class="form-control">
+          <div class="error-text" id="passwordError"></div>
+        </div>
+        
+        <!-- Confirm Password -->
+        <div class="mb-3">
+          <label class="form-label">Confirm Password</label>
+          <input type="password" id="confirmPassword" class="form-control">
+          <div class="error-text" id="confirmPasswordError"></div>
+        </div>
+        
+        <!-- Interesting Topics -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">Interesting Topics 
+            <span class="error-text d-inline" id="topicsError"></span>
+          </label>
+          <div class="form-check">
+            <input class="form-check-input topic" type="checkbox" id="topic1" value="HTML">
+            <label class="form-check-label" for="topic1">HTML</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input topic" type="checkbox" id="topic2" value="CSS">
+            <label class="form-check-label" for="topic2">CSS</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input topic" type="checkbox" id="topic3" value="JavaScript">
+            <label class="form-check-label" for="topic3">JavaScript</label>
+          </div>
+        </div>
+        
+        <!-- Gender -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">Gender 
+            <span class="error-text d-inline" id="genderError"></span>
+          </label>
+          <select id="gender" class="form-select">
+            <option>--</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+        
+        <!-- Submit -->
+        <button id="submitBtn" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      
+      function validateEmptyField(fieldId, errorId) {
+        const field = $('#' + fieldId);
+        const error = $('#' + errorId);
+        
+        if (field.val().trim() === '') {
+          field.addClass('border-red');
+          error.text('This field must not be empty').show();
+          return false;
+        } else {
+          field.removeClass('border-red');
+          error.hide();
+          return true;
+        }
+      }
+      
+      function validateTopics() {
+        const checkedTopics = $('.topic:checked').length;
+        const error = $('#topicsError');
+        
+        if (checkedTopics === 0) {
+          error.text('At least one topic must be selected').show();
+          return false;
+        } else {
+          error.hide();
+          return true;
+        }
+      }
+      
+      function validateGender() {
+        const gender = $('#gender');
+        const error = $('#genderError');
+        
+        if (gender.val() === '--') {
+          error.text('Please choose your gender').show();
+          return false;
+        } else {
+          error.hide();
+          return true;
+        }
+      }
+      
+      function validatePasswordMatch() {
+        const password = $('#password');
+        const confirmPassword = $('#confirmPassword');
+        const error = $('#confirmPasswordError');
+        
+        if (password.val() !== confirmPassword.val()) {
+          confirmPassword.addClass('border-red');
+          error.text('Confirmed password mismatched the password').show();
+          return false;
+        } else {
+          confirmPassword.removeClass('border-red');
+          error.hide();
+          return true;
+        }
+      }
+      
+      $('#submitBtn').on('click', function(event) {
+        event.preventDefault();
+        
+        const isUsernameValid = validateEmptyField('username', 'usernameError');
+        const isEmailValid = validateEmptyField('email', 'emailError');
+        const isPasswordValid = validateEmptyField('password', 'passwordError');
+        const isConfirmPasswordValid = validateEmptyField('confirmPassword', 'confirmPasswordError');
+        const isTopicsValid = validateTopics();
+        const isGenderValid = validateGender();
+        
+        let isPasswordMatchValid = true;
+        if (isPasswordValid && isConfirmPasswordValid) {
+          isPasswordMatchValid = validatePasswordMatch();
+        }
+        
+        if (isUsernameValid && isEmailValid && isPasswordValid && 
+            isConfirmPasswordValid && isTopicsValid && isGenderValid && 
+            isPasswordMatchValid) {
+          alert('Form submitted successfully!');
+        }
+      });
+      
+      $('#username').on('blur', function(event) {
+        validateEmptyField('username', 'usernameError');
+      });
+      
+      $('#email').on('blur', function(event) {
+        validateEmptyField('email', 'emailError');
+      });
+      
+      $('#password').on('blur', function(event) {
+        validateEmptyField('password', 'passwordError');
+      });
+      
+      $('#confirmPassword').on('blur', function(event) {
+        validateEmptyField('confirmPassword', 'confirmPasswordError');
+      });
+      
+      $('.topic').on('change', function(event) {
+        validateTopics();
+      });
+      
+      $('#gender').on('change', function(event) {
+        validateGender();
+      });
+      
+    });
+  </script>
 </body>
-
 </html>
